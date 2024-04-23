@@ -34,7 +34,7 @@ volume_vendas_por_categoria = volume_vendas_por_categoria.sort_values(by='volume
 # Imprimir volume de vendas por categoria de produto
 print("Volume de Vendas por Categoria de Produto:")
 print(volume_vendas_por_categoria)
-print("\n\n\n")
+print("\n\n")
 
 # Plotar gráfico de barras do volume de vendas por categoria de produto
 plt.figure(figsize=(10, 6))
@@ -61,7 +61,7 @@ df_pedidos['tempo_entrega'] = df_pedidos['order_delivered_customer_date'] - df_p
 # Calcular o tempo médio de entrega, excluindo valores "data indisponível"
 tempo_medio_entrega = df_pedidos[df_pedidos['order_delivered_customer_date'].notnull()]['tempo_entrega'].mean()
 print("Tempo Médio de Entrega: ", tempo_medio_entrega)
-print("\n\n\n")
+print("\n\n")
 
 # Calcular o tempo de trânsito de cada pedido
 df_pedidos['order_approved_at'] = pd.to_datetime(df_pedidos['order_approved_at'], errors='coerce')
@@ -77,7 +77,6 @@ df_pedidos_validos['tempo_transito'] = df_pedidos_validos['order_delivered_custo
 # Exibir estatísticas do tempo de trânsito
 print("Estatísticas do Tempo de Trânsito:")
 print(df_pedidos_validos['tempo_transito'].describe())
-print("\n\n\n")
 print("\n\n\n")
 
 
@@ -124,7 +123,6 @@ plt.xticks(rotation=90)
 plt.tight_layout()
 plt.show()
 print("\n\n\n")
-print("\n\n\n")
 
 
 print('4. Análise Financeira')
@@ -148,7 +146,6 @@ lucratividade_por_categoria = lucratividade_por_categoria.sort_values(by='lucro'
 # Imprimir lucratividade por categoria de produto
 print("\nLucratividade por Categoria de Produto (da maior para a menor):")
 print(lucratividade_por_categoria)
-print("\n\n\n")
 print("\n\n\n")
 
 # Plotar gráfico de barras da lucratividade por categoria de produto
