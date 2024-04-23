@@ -23,7 +23,7 @@ df_avaliacoes_pedido['review_comment_title'] = df_avaliacoes_pedido['review_comm
 df_avaliacoes_pedido['review_comment_message'] = df_avaliacoes_pedido['review_comment_message'].fillna('sem comentários')
 
 print('1. Análise de Performance de Vendas')
-print('a. Volume de Vendas por Categoria: Identificar quais categorias de produtos têm o maior volume de vendas e em quais períodos (mensal, trimestral)')
+print('\na. Volume de Vendas por Categoria: Identificar quais categorias de produtos têm o maior volume de vendas e em quais períodos (mensal, trimestral)')
 
 # Passo 1: Agrupar os dados de vendas por categoria de produto e calcular o volume de vendas
 merged_df = pd.merge(df_itens_pedido, df_produtos, on='product_id', how='inner')
@@ -48,7 +48,7 @@ plt.show()
 
 
 print('2. Análise de Logística')
-print('a. Prazos de Entrega: Calcular o tempo médio de entrega e identificar os fatores que influenciam atrasos nas entregas.')
+print('\na. Prazos de Entrega: Calcular o tempo médio de entrega e identificar os fatores que influenciam atrasos nas entregas.')
 # Passo 1: Calcular o tempo de entrega para cada pedido.
 # Converter as colunas de data para datetime
 df_pedidos['order_purchase_timestamp'] = pd.to_datetime(df_pedidos['order_purchase_timestamp'])
@@ -81,7 +81,7 @@ print("\n\n\n")
 
 
 print('3. Análise de Satisfação do Cliente')
-print('a. Avaliações de Produtos: Analisar a distribuição das avaliações dos produtos e identificar os produtos com as melhores e piores avaliações')
+print('\na. Avaliações de Produtos: Analisar a distribuição das avaliações dos produtos e identificar os produtos com as melhores e piores avaliações')
 # Passo 1: Fundir os DataFrames df_avaliacoes_pedido e df_itens_pedido usando a coluna 'order_id' como chave de junção
 avaliacoes_itens_fundidos = pd.merge(df_avaliacoes_pedido, df_itens_pedido, on='order_id', how='inner')
 
@@ -126,7 +126,7 @@ print("\n\n\n")
 
 
 print('4. Análise Financeira')
-print('a. Análise de Lucratividade por Categoria: Calcular a lucratividade de diferentes categorias de produtos, levando em conta o custo dos produtos e o preço de venda.')
+print('\na. Análise de Lucratividade por Categoria: Calcular a lucratividade de diferentes categorias de produtos, levando em conta o custo dos produtos e o preço de venda.')
 # Calcular o custo total de cada categoria de produto
 merged_df = pd.merge(df_itens_pedido, df_produtos, on='product_id', how='inner')
 custo_por_categoria = merged_df.groupby('product_category_name')['price'].sum().reset_index()
@@ -160,7 +160,7 @@ plt.show()
 
 
 print(' 5. Análise de Marketing')
-print('a. Análise de Conversão de Vendas: Estudar a taxa de conversão de vendas com base em diferentes fontes de tráfego (orgânico, pago, social, etc.).')
+print('\na. Análise de Conversão de Vendas: Estudar a taxa de conversão de vendas com base em diferentes fontes de tráfego (orgânico, pago, social, etc.).')
 # Passo 1: Filtrar transações concluídas
 transacoes_concluidas = df_pedidos[df_pedidos['order_status'] == 'delivered']
 
