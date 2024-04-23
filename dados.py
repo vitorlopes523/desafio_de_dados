@@ -12,18 +12,16 @@ df_produtos = pd.read_csv("Brazilian E-Commerce Public Dataset by Olist/olist_pr
 df_vendedores = pd.read_csv("Brazilian E-Commerce Public Dataset by Olist/olist_sellers_dataset.csv")
 df_traducao_categoria = pd.read_csv("Brazilian E-Commerce Public Dataset by Olist/product_category_name_translation.csv")
 
-# Lidar com valores ausentes (se necessário)
-# Preencher valores nulos nas colunas de datas em df_pedidos com a mensagem "data indisponível"
+# Lidando com valores ausentes (se necessário)
+# Preenchendo valores nulos nas colunas de datas em df_pedidos com a mensagem "data indisponível"
 df_pedidos['order_approved_at'] = df_pedidos['order_approved_at'].fillna('data indisponível')
 df_pedidos['order_delivered_carrier_date'] = df_pedidos['order_delivered_carrier_date'].fillna('data indisponível')
 df_pedidos['order_delivered_customer_date'] = df_pedidos['order_delivered_customer_date'].fillna('data indisponível')
 
-# Preencher valores nulos nas colunas de comentário em df_avaliacoes_pedido com "sem comentários"
+# Preenchendo valores nulos nas colunas de comentário em df_avaliacoes_pedido com "sem comentários"
 df_avaliacoes_pedido['review_comment_title'] = df_avaliacoes_pedido['review_comment_title'].fillna('sem comentários')
 df_avaliacoes_pedido['review_comment_message'] = df_avaliacoes_pedido['review_comment_message'].fillna('sem comentários')
 
-# 1. Análise de Performance de Vendas
-# a. Volume de Vendas por Categoria: Identificar quais categorias de produtos têm o maior volume de vendas e em quais períodos (mensal, trimestral)
 print('1. Análise de Performance de Vendas')
 print('a. Volume de Vendas por Categoria: Identificar quais categorias de produtos têm o maior volume de vendas e em quais períodos (mensal, trimestral)')
 
@@ -38,23 +36,17 @@ print("Volume de Vendas por Categoria de Produto:")
 print(volume_vendas_por_categoria)
 print("\n\n\n")
 
-# Passo 2: Agregar os dados em diferentes períodos de tempo (mensal, trimestral)
-df_pedidos['order_purchase_timestamp'] = pd.to_datetime(df_pedidos['order_purchase_timestamp'])
-df_pedidos['order_month'] = df_pedidos['order_purchase_timestamp'].dt.to_period('M')
-volume_vendas_por_categoria_mensal = merged_df.groupby(['product_category_name', df_pedidos['order_month']])['order_id'].count().reset_index()
-volume_vendas_por_categoria_mensal.columns = ['product_category_name', 'order_month', 'volume_vendas']
-volume_vendas_por_categoria_mensal = volume_vendas_por_categoria_mensal.sort_values(by='volume_vendas', ascending=False)
+# Plotar gráfico de barras do volume de vendas por categoria de produto
+plt.figure(figsize=(10, 6))
+plt.bar(volume_vendas_por_categoria['product_category_name'], volume_vendas_por_categoria['volume_vendas'], color='skyblue')
+plt.xlabel('Categoria de Produto')
+plt.ylabel('Volume de Vendas')
+plt.title('Volume de Vendas por Categoria de Produto')
+plt.xticks(rotation=90)
+plt.tight_layout()
+plt.show()
 
-# Imprimir volume de vendas mensal por categoria de produto
-print("\nVolume de Vendas Mensal por Categoria de Produto:")
-print(volume_vendas_por_categoria_mensal)
-print("\n\n\n")
-print("\n\n\n")
 
-##--------/////-------------
-
-# 2. Análise de Logística
-# a. Prazos de Entrega: Calcular o tempo médio de entrega e identificar os fatores que influenciam atrasos nas entregas.
 print('2. Análise de Logística')
 print('a. Prazos de Entrega: Calcular o tempo médio de entrega e identificar os fatores que influenciam atrasos nas entregas.')
 # Passo 1: Calcular o tempo de entrega para cada pedido.
@@ -88,10 +80,7 @@ print(df_pedidos_validos['tempo_transito'].describe())
 print("\n\n\n")
 print("\n\n\n")
 
-##--------/////-------------
 
-# 3. Análise de Satisfação do Cliente
-# a. Avaliações de Produtos: Analisar a distribuição das avaliações dos produtos e identificar os produtos com as melhores e piores avaliações
 print('3. Análise de Satisfação do Cliente')
 print('a. Avaliações de Produtos: Analisar a distribuição das avaliações dos produtos e identificar os produtos com as melhores e piores avaliações')
 # Passo 1: Fundir os DataFrames df_avaliacoes_pedido e df_itens_pedido usando a coluna 'order_id' como chave de junção
@@ -113,14 +102,31 @@ print(produtos_classificados.head(10))  # Os 10 produtos com as melhores avalia�
 
 print("\nProdutos com as Piores Avaliações:")
 print(produtos_classificados.tail(10))  # Os 10 produtos com as piores avaliações
+# Plotar gráfico de barras das avaliações médias dos produtos
+plt.figure(figsize=(10, 6))
+plt.bar(produtos_classificados['product_id'].head(10), produtos_classificados['review_score'].head(10), color='lightgreen')
+plt.xlabel('ID do Produto')
+plt.ylabel('Avaliação Média')
+plt.title('Top 10 Produtos com Melhores Avaliações')
+plt.xticks(rotation=90)
+plt.tight_layout()
+plt.show()
+
+print("\nProdutos com as Piores Avaliações:")
+print(produtos_classificados.tail(10))  # Os 10 produtos com as piores avaliações
+# Plotar gráfico de barras das avaliações médias dos produtos
+plt.figure(figsize=(10, 6))
+plt.bar(produtos_classificados['product_id'].tail(10), produtos_classificados['review_score'].tail(10), color='lightcoral')
+plt.xlabel('ID do Produto')
+plt.ylabel('Avaliação Média')
+plt.title('Top 10 Produtos com Piores Avaliações')
+plt.xticks(rotation=90)
+plt.tight_layout()
+plt.show()
 print("\n\n\n")
 print("\n\n\n")
 
 
-#-------///////---------
-
-# 4. Análise Financeira
-# a. Análise de Lucratividade por Categoria: Calcular a lucratividade de diferentes categorias de produtos, levando em conta o custo dos produtos e o preço de venda.
 print('4. Análise Financeira')
 print('a. Análise de Lucratividade por Categoria: Calcular a lucratividade de diferentes categorias de produtos, levando em conta o custo dos produtos e o preço de venda.')
 # Calcular o custo total de cada categoria de produto
@@ -145,9 +151,17 @@ print(lucratividade_por_categoria)
 print("\n\n\n")
 print("\n\n\n")
 
-#-------///////-----------
-# 5. Análise de Marketing
-# a. Análise de Conversão de Vendas: Estudar a taxa de conversão de vendas com base em diferentes fontes de tráfego (orgânico, pago, social, etc.).
+# Plotar gráfico de barras da lucratividade por categoria de produto
+plt.figure(figsize=(10, 6))
+plt.bar(lucratividade_por_categoria['product_category_name'], lucratividade_por_categoria['lucro'], color='orange')
+plt.xlabel('Categoria de Produto')
+plt.ylabel('Lucro')
+plt.title('Lucratividade por Categoria de Produto')
+plt.xticks(rotation=90)
+plt.tight_layout()
+plt.show()
+
+
 print(' 5. Análise de Marketing')
 print('a. Análise de Conversão de Vendas: Estudar a taxa de conversão de vendas com base em diferentes fontes de tráfego (orgânico, pago, social, etc.).')
 # Passo 1: Filtrar transações concluídas
@@ -171,3 +185,11 @@ total_transacoes_concluidas['taxa_conversao'] = (total_transacoes_concluidas['tr
 # Exibir os resultados
 print("\nTaxa de Conversão de Vendas por Tipo de Pagamento:")
 print(total_transacoes_concluidas[['payment_type', 'taxa_conversao']])
+
+## Plotar gráfico de pizza da taxa de conversão de vendas por tipo de pagamento
+plt.figure(figsize=(8, 8))
+plt.pie(total_transacoes_concluidas['taxa_conversao'], labels=total_transacoes_concluidas['payment_type'], autopct='%1.1f%%')
+plt.title('Taxa de Conversão de Vendas por Tipo de Pagamento')
+plt.axis('equal')
+plt.tight_layout()
+plt.show()
