@@ -39,6 +39,20 @@ Os dados são exibidos no terminal e também podem ser visualizados no gráfico 
 a. Prazos de Entrega: Calcular o tempo médio de entrega e identificar os fatores que influenciam atrasos nas entregas.
 
 Nesta seção, foi calculado o tempo médio de entrega dos produtos. O resultado foi exibido no terminal.
+```bash
+Tempo Médio de Entrega:  12 days 13:24:31.879068369
+
+Estatísticas do Tempo de Trânsito:
+count                         96461
+mean     12 days 03:07:06.747960315
+std       9 days 12:23:04.762584399
+min               -7 days +00:14:54
+25%                 6 days 07:26:12
+50%                 9 days 20:27:15
+75%                15 days 03:23:20
+max               208 days 12:01:24
+Name: tempo_transito, dtype: object
+```
 
 ### 3. Análise de Satisfação do Cliente
 a. Avaliações de Produtos: Analisar a distribuição das avaliações dos produtos e identificar os produtos com as melhores e piores avaliações.
